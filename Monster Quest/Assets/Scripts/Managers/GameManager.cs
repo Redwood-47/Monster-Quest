@@ -1,16 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MonsterQuest
 {
     public class GameManager : MonoBehaviour
     {
+        private CombatManager combatManager;
+        private GameState gameState;
+
+        private void Awake()
+        {
+            combatManager = GetComponent<CombatManager>();
+        }
         // Start is called before the first frame update
         void Start()
         {
-            if (IsStandardDiceNotation("3d4") == true)
-            {
-                Debug.Log(DiceRoll("3d4"));
-            }
+            NewGame();
+            Simulate();
         }
 
         // Update is called once per frame
@@ -19,69 +25,36 @@ namespace MonsterQuest
 
         }
 
-        static int DiceRoll(int numberOfRolls, int diceSides, int fixedBonus = 0)
+        public void NewGame()
         {
-            int result = 0;
-            for (int i = 0; i < numberOfRolls; i++)
-            {
-                int roll = Random.Range(0, diceSides) + 1;
-                result += roll;
-            }
-            result += fixedBonus;
-            return result;
+            Party party = new Party(new List<Character>());
+            gameState = new GameState(party);
         }
 
-        static int DiceRoll(string DiceNotation)
+        public void Simulate()
         {
-            DiceNotation.Split("D");
-            DiceNotation.Split("+");
+            gameState.party.characters.Add(new Character("David"));
+            gameState.party.characters.Add(new Character("Foul Fritjof"));
+            gameState.party.characters.Add(new Character("Rozanna"));
+            gameState.party.characters.Add(new Character("Sinclair"));
 
-            string[] RollStorage = DiceNotation.Split();
-            string[] RollStorage2 = DiceNotation.Split();
-            string[] RollStorage3 = DiceNotation.Split();
-            RollStorage = DiceNotation.Split("d");
-            RollStorage2 = RollStorage[1].Split("+");
-            RollStorage3 = RollStorage2[0].Split("-");
+            Console.WriteLine($"Swashbuckling pirates {StringHelper.JoinWithAnd(gameState.party.characters)} stand upon the deck.");
 
-            int numberOfRolls;
-            int diceSides = int.Parse(RollStorage3[0]);
-            int fixedBonus;
+            int skeletonHP = DiceHelper.Roll("2d8+6");
+            gameState.EnterCombatWithMonster(new Monster("Drowned Skeleton", skeletonHP, 10));
+            combatManager.Simulate(gameState);
 
-            if (RollStorage[0] == string.Empty)
-            {
-                numberOfRolls = 1;
-            }
-            else
-            {
-                numberOfRolls = int.Parse(RollStorage[0]);
-            }
+            int sahuaginHp = DiceHelper.Roll("6d8+12");
+            gameState.EnterCombatWithMonster(new Monster("Sahuagin", sahuaginHp, 18));
+            combatManager.Simulate(gameState);
 
-            if (RollStorage2.Length == 1 && RollStorage3.Length == 1)
-            {
-                fixedBonus = 0;
-            }
-            else if (RollStorage3.Length == 2)
-            {
-                fixedBonus = -int.Parse(RollStorage3[1]);
-            }
-            else
-            {
-                fixedBonus = int.Parse(RollStorage2[1]);
-            }
+            int krakenHp = DiceHelper.Roll("8d10+40");
+            gameState.EnterCombatWithMonster(new Monster("Kraken", krakenHp, 16));
+            combatManager.Simulate(gameState);
 
-            return DiceRoll(numberOfRolls, diceSides, fixedBonus);
-        }
-
-        static bool IsStandardDiceNotation(string text)
-        {
-            if (text.Contains("d"))
+            if (gameState.party.characters.Count > 0)
             {
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Impossible. This is not how you throw a dice. Check your spelling, and try another time.");
-                return false;
+                Console.WriteLine($"After defending their ship from three vicious attackers, the pirates {StringHelper.JoinWithAnd(gameState.party.characters)} sail away to plunder another day.");
             }
         }
     }
