@@ -163,6 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 105512658}
+  - component: {fileID: 105512659}
   m_Layer: 0
   m_Name: Combat
   m_TagString: Untagged
@@ -187,6 +188,19 @@ Transform:
   m_Father: {fileID: 1066135998}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &105512659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105512657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18da46847b544f67b4ae42c7a4d07151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creaturePrefab: {fileID: 2658546893688436781, guid: 757286616b97e4875bd11973767617ef, type: 3}
 --- !u!1 &497185838
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +662,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d75a9b44abb1dca419cd2c3bf04975fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterSprite:
+  - {fileID: 21300000, guid: d2ae9b257628d0441a76631eb32c122e, type: 3}
+  - {fileID: 21300000, guid: d2ae9b257628d0441a76631eb32c122e, type: 3}
+  - {fileID: 21300000, guid: d2ae9b257628d0441a76631eb32c122e, type: 3}
+  - {fileID: 21300000, guid: d2ae9b257628d0441a76631eb32c122e, type: 3}
+  monsterSprite:
+  - {fileID: 21300000, guid: 367c3d73c321e8a47b08cfbfeea81c7e, type: 3}
+  - {fileID: 21300000, guid: cc98dc6b65648754bb1a2d4eba7584a3, type: 3}
+  - {fileID: 21300000, guid: 995e39af9bc5df141be17a919346ce95, type: 3}
 --- !u!114 &1066136000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0e43a35f1464742b0f68f89d5298dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creaturePresenter: {fileID: 0}
 --- !u!1 &1088585501
 GameObject:
   m_ObjectHideFlags: 0
